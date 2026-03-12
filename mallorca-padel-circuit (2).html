@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Torneo Pádel Sa Cabana — Polideportivo Sa Cabana · Abril 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ================================================
+   TOKENS
+   ================================================ */
+:root,[data-theme="dark"]{
+  --lime:#C8F135; --lime-dim:#a0c020; --lime-glow:rgba(200,241,53,0.28);
+  --bg:#0a0a0a; --bg2:#111111; --bg3:#181818; --bg4:#232323; --bg5:#2c2c2c;
+  --text:#f5f5f0; --text2:#888880; --text3:#52524d;
+  --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.04);
+  --card-bg:#111; --card-hover:rgba(200,241,53,0.18);
+  --nav-bg:rgba(10,10,10,0.96);
+  --input-bg:#181818; --shadow:0 20px 60px rgba(0,0,0,0.55);
+  --red:#FF3B30; --gold:#FFD700;
+  --T:cubic-bezier(.4,0,.2,1);
+}
+[data-theme="light"]{
+  --lime:#4e8c00; --lime-dim:#3d7000; --lime-glow:rgba(78,140,0,0.22);
+  --bg:#f3f3ee; --bg2:#ffffff; --bg3:#eaeae4; --bg4:#ddddd7; --bg5:#d0d0ca;
+  --text:#0f0f0c; --text2:#5a5a54; --text3:#909088;
+  --border:rgba(0,0,0,0.09); --border2:rgba(0,0,0,0.05);
+  --card-bg:#fff; --card-hover:rgba(78,140,0,0.22);
+  --nav-bg:rgba(243,243,238,0.96);
+  --input-bg:#ececE6; --shadow:0 8px 40px rgba(0,0,0,0.1);
+  --red:#c9302a; --gold:#9a7209;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+
+/* ================================================
+   CURSOR
+   ================================================ */
+.cursor{position:fixed;width:11px;height:11px;background:var(--lime);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s}
+.cursor-ring{position:fixed;width:38px;height:38px;border:1px solid var(--lime-glow);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s}
+@media(hover:none){.cursor,.cursor-ring{display:none}body{cursor:auto}}
+
+/* ================================================
+   NAV
+   ================================================ */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid transparent;transition:background .4s,padding .4s,border-color .4s,backdrop-filter .4s}
+nav.scrolled{background:var(--nav-bg);backdrop-filter:blur(20px);padding:.75rem 2rem;border-bottom-color:var(--border)}
+.nav-logo{font-family:'Bebas Neue',cursive;font-size:1.55rem;letter-spacing:.05em;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:.4rem}
+.nav-logo .dot{color:var(--lime)}
+.nav-right{display:flex;align-items:center;gap:1.4rem}
+.nav-links{display:flex;align-items:center;gap:1.8rem;list-style:none}
+.nav-links a{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);text-decoration:none;position:relative;transition:color .2s}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:100%;height:1px;background:var(--lime);transition:right .3s var(--T)}
+.nav-links a:hover{color:var(--text)} .nav-links a:hover::after{right:0}
+.nav-cta{background:var(--lime)!important;color:var(--bg)!important;padding:.5rem 1.3rem;border-radius:2px;font-weight:700!important}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 6px 24px var(--lime-glow)}
+
+/* theme toggle */
+.theme-toggle{display:flex;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:30px;padding:.28rem;cursor:pointer;position:relative;width:66px;height:30px;flex-shrink:0}
+.tt-ball{position:absolute;top:3px;left:3px;width:24px;height:24px;background:var(--lime);border-radius:50%;transition:transform .3s var(--T);display:flex;align-items:center;justify-content:center;font-size:.7rem}
+[data-theme="light"] .tt-ball{transform:translateX(36px)}
+.tt-icons{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 7px;pointer-events:none;font-size:.7rem}
+.lang-switch{display:flex;gap:.3rem}
+.lang-btn{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;padding:.28rem .55rem;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s}
+.lang-btn.active{background:var(--bg4);color:var(--lime);border-color:var(--lime-glow)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:26px;height:2px;background:var(--text);border-radius:1px}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:58px;left:0;right:0;background:var(--nav-bg);backdrop-filter:blur(20px);padding:2rem;gap:1.4rem;align-items:flex-start;border-bottom:1px solid var(--border)}
+  .nav-links a{font-size:.95rem}
+}
+
+/* ================================================
+   HERO
+   ================================================ */
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(165deg,#071a05 0%,#0a2208 40%,#060e04 100%)}
+[data-theme="light"] .hero-bg{background:linear-gradient(165deg,#d8efcc 0%,#e8f5dc 40%,#f3f3ee 100%)}
+.hero-photo{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1627626775846-122b778965ae?w=1600&h=900&fit=crop&auto=format&q=60') center/cover no-repeat;opacity:.18}
+[data-theme="light"] .hero-photo{opacity:.12}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,241,53,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(200,241,53,.04) 1px,transparent 1px);background-size:55px 55px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%)}
+.hero-content{position:relative;z-index:2;padding:8rem 2rem 5rem;max-width:1200px;margin:0 auto;width:100%}
+.hero-eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.8rem;flex-wrap:wrap;animation:fadeUp .8s var(--T) both}
+.hero-sponsor-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:.35rem 1rem;border-radius:2px;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+[data-theme="light"] .hero-sponsor-badge{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.12);color:var(--text2)}
+.hero-sponsor-badge .gp-name{font-weight:700;color:var(--text)}
+.hero-live-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(200,241,53,.12);border:1px solid var(--lime-glow);padding:.35rem .9rem;border-radius:20px;font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lime)}
+.hero-live-pill::before{content:'';width:6px;height:6px;background:var(--lime);border-radius:50%;animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero-title{font-family:'Bebas Neue',cursive;font-size:clamp(3.5rem,11vw,9.5rem);line-height:.88;letter-spacing:-.01em;margin-bottom:1.2rem;animation:fadeUp .8s .1s var(--T) both}
+.hero-title .line2{color:var(--lime)}
+.hero-title .line3{-webkit-text-stroke:1.5px var(--text3);color:transparent}
+[data-theme="light"] .hero-title .line3{-webkit-text-stroke:2px rgba(0,0,0,.18)}
+.hero-dates-banner{display:inline-flex;align-items:center;gap:1rem;background:var(--lime);color:var(--bg);padding:.7rem 1.8rem;border-radius:2px;margin-bottom:1.8rem;animation:fadeUp .8s .2s var(--T) both}
+.hero-dates-banner .dtext{font-family:'Bebas Neue',cursive;font-size:1.5rem;letter-spacing:.06em}
+.hero-dates-banner .dsub{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s .3s var(--T) both}
+.btn-primary{display:inline-flex;align-items:center;gap:.6rem;background:var(--lime);color:var(--bg);font-family:'Bebas Neue',cursive;font-size:1.1rem;letter-spacing:.1em;padding:.95rem 2.4rem;border-radius:2px;text-decoration:none;border:none;cursor:pointer;position:relative;overflow:hidden;animation:glow-pulse 2.5s ease-in-out infinite}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 18px var(--lime-glow),0 0 50px transparent}50%{box-shadow:0 0 35px var(--lime-glow),0 0 70px var(--lime-glow)}}
+.btn-primary:hover{transform:translateY(-3px);animation:none;box-shadow:0 10px 45px var(--lime-glow)}
+.btn-secondary{display:inline-flex;align-items:center;gap:.6rem;background:transparent;color:var(--text);font-family:'Bebas Neue',cursive;font-size:1.1rem;letter-spacing:.1em;padding:.95rem 2.4rem;border-radius:2px;text-decoration:none;border:1px solid var(--border);cursor:pointer;transition:all .2s}
+.btn-secondary:hover{border-color:var(--lime-glow);background:rgba(200,241,53,.06)}
+.hero-stats{display:flex;gap:2.5rem;margin-top:4rem;padding-top:3rem;border-top:1px solid var(--border);flex-wrap:wrap;animation:fadeUp .8s .4s var(--T) both}
+.hero-stat .num{font-family:'Bebas Neue',cursive;font-size:2.8rem;line-height:1;color:var(--lime)}
+.hero-stat .lbl{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text2);margin-top:.25rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* ================================================
+   TICKER
+   ================================================ */
+.ticker{background:var(--lime);color:var(--bg);overflow:hidden;padding:.48rem 0}
+.ticker-inner{display:flex;animation:marquee 26s linear infinite;width:max-content}
+.ticker-item{font-family:'Bebas Neue',cursive;font-size:.88rem;letter-spacing:.1em;padding:0 2rem;white-space:nowrap;display:flex;align-items:center;gap:.8rem}
+.ticker-sep{opacity:.35}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ================================================
+   SPONSORS BAR
+   ================================================ */
+.sponsors-bar{background:var(--bg2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);padding:1.1rem 0;overflow:hidden}
+.sponsors-lbl{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);text-align:center;margin-bottom:.9rem;padding:0 1rem}
+.marquee-track{display:flex;gap:3.5rem;animation:marquee 22s linear infinite;width:max-content;align-items:center}
+.marquee-track:hover{animation-play-state:paused}
+.sponsor-logo{font-family:'Bebas Neue',cursive;font-size:1.25rem;letter-spacing:.08em;color:var(--text3);white-space:nowrap;display:flex;align-items:center;gap:.4rem;transition:color .2s}
+.sponsor-logo:hover{color:var(--text)}
+.sponsor-logo.main-sponsor{color:var(--lime)!important;font-size:1.5rem}
+.sponsor-sep{color:var(--lime);font-size:.4rem}
+
+/* ================================================
+   SECTION COMMONS
+   ================================================ */
+section{padding:6rem 2rem}
+.sec{max-width:1200px;margin:0 auto}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;gap:1rem;flex-wrap:wrap}
+.sec-lbl{font-family:'Space Mono',monospace;font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);margin-bottom:.55rem}
+.sec-title{font-family:'Bebas Neue',cursive;font-size:clamp(2.4rem,5.5vw,4.2rem);line-height:.95;letter-spacing:.02em}
+.see-all{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);text-decoration:none;display:flex;align-items:center;gap:.4rem;white-space:nowrap;transition:gap .2s}
+.see-all:hover{gap:.8rem}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .75s var(--T),transform .75s var(--T)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:.1s} .rd2{transition-delay:.2s} .rd3{transition-delay:.3s}
+
+/* ================================================
+   COUNTDOWN
+   ================================================ */
+.countdown-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.cd-inner{max-width:1200px;margin:0 auto;padding:2.8rem 2rem;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
+.ev-label{font-family:'Space Mono',monospace;font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--lime)}
+.ev-title{font-family:'Bebas Neue',cursive;font-size:2.4rem;line-height:1}
+.ev-meta{display:flex;gap:1.4rem;flex-wrap:wrap;margin-top:.5rem}
+.ev-meta-item{display:flex;align-items:center;gap:.35rem;font-size:.83rem;color:var(--text2)}
+.ev-meta-item .ico{color:var(--lime)}
+.ev-cats{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.7rem}
+.cat-tag{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.08em;padding:.22rem .65rem;border:1px solid var(--border);border-radius:2px;color:var(--text2);text-transform:uppercase}
+.cd-timer{display:flex;gap:.9rem;align-items:flex-start}
+.cd-block{text-align:center;min-width:66px}
+.cd-num{font-family:'Bebas Neue',cursive;font-size:3.2rem;line-height:1;color:var(--text);display:block;background:var(--bg3);border:1px solid var(--border);padding:.45rem .7rem;border-radius:4px;min-width:66px;text-align:center;transition:color .3s}
+.cd-num.pop{color:var(--lime)}
+.cd-lbl{font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-top:.35rem;display:block}
+.cd-sep{font-family:'Bebas Neue',cursive;font-size:2.8rem;color:var(--text3);padding-top:.3rem}
+@media(max-width:768px){.cd-inner{grid-template-columns:1fr}.cd-num{font-size:2.4rem;min-width:54px}.cd-block{min-width:54px}}
+
+/* ================================================
+   TORNEO INFO CARD (main)
+   ================================================ */
+#torneo{background:var(--bg)}
+.torneo-main-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+@media(max-width:768px){.torneo-main-grid{grid-template-columns:1fr}}
+.torneo-main-photo{position:relative;border-radius:6px;overflow:hidden;height:420px}
+.torneo-main-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.85)}
+[data-theme="light"] .torneo-main-photo img{filter:brightness(.92) saturate(1.1)}
+.torneo-main-photo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 55%)}
+.photo-caption{position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;z-index:2}
+.photo-caption .pc-venue{font-family:'Bebas Neue',cursive;font-size:1.6rem;letter-spacing:.04em;color:#fff}
+.photo-caption .pc-date{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-top:.25rem}
+.torneo-main-info{display:flex;flex-direction:column;gap:1.4rem}
+.info-block{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:1.4rem}
+.ib-label{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem}
+.ib-label::before{content:'';display:block;width:14px;height:1px;background:var(--lime)}
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.price-card{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1rem;text-align:center}
+.price-amount{font-family:'Bebas Neue',cursive;font-size:2.6rem;line-height:1;color:var(--lime)}
+.price-desc{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);margin-top:.3rem}
+.cats-grid{display:flex;flex-direction:column;gap:.6rem}
+.cat-row{display:flex;align-items:center;justify-content:space-between;padding:.6rem .8rem;background:var(--bg3);border:1px solid var(--border);border-radius:4px}
+.cat-row-name{font-size:.88rem;font-weight:600}
+.cat-row-tags{display:flex;gap:.35rem;flex-wrap:wrap}
+.mini-tag{font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.06em;padding:.18rem .5rem;border:1px solid var(--border);border-radius:2px;color:var(--text3);text-transform:uppercase}
+.pack-list{display:flex;flex-direction:column;gap:.5rem}
+.pack-item{display:flex;align-items:center;gap:.6rem;font-size:.84rem;color:var(--text2)}
+.pack-item .pi-icon{color:var(--lime);font-size:1rem;flex-shrink:0}
+.premios-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.premio-card{background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:.9rem;text-align:center}
+.premio-icon{font-size:1.6rem;margin-bottom:.4rem}
+.premio-text{font-size:.78rem;color:var(--text2);line-height:1.4}
+.inscripcion-btn{display:flex;align-items:center;justify-content:center;gap:.6rem;background:var(--lime);color:var(--bg);font-family:'Bebas Neue',cursive;font-size:1.15rem;letter-spacing:.1em;padding:1rem;border-radius:4px;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;width:100%;text-align:center}
+.inscripcion-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--lime-glow)}
+.inscripcion-deadline{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-align:center;color:var(--text3);margin-top:.6rem}
+.inscripcion-deadline span{color:var(--red)}
+
+/* ================================================
+   CUADRO DEL TORNEO
+   ================================================ */
+#cuadro{background:var(--bg2)}
+
+/* tabs */
+.cuadro-tabs{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:1rem}
+.c-tab{font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;padding:.5rem 1.1rem;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s}
+.c-tab.active,.c-tab:hover{background:var(--lime);color:var(--bg);border-color:var(--lime)}
+
+/* category selector + controls */
+.cuadro-controls{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:2rem;padding:1.2rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px}
+.cc-label{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2)}
+.cc-select{background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:.5rem .9rem;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;cursor:pointer;-webkit-appearance:none}
+.cc-select:focus{border-color:var(--lime-glow)}
+.cc-btn{display:inline-flex;align-items:center;gap:.4rem;font-family:'Bebas Neue',cursive;font-size:1rem;letter-spacing:.08em;padding:.55rem 1.3rem;border-radius:4px;border:none;cursor:pointer;transition:all .2s}
+.cc-btn-primary{background:var(--lime);color:var(--bg)}
+.cc-btn-primary:hover{box-shadow:0 4px 18px var(--lime-glow);transform:translateY(-1px)}
+.cc-btn-secondary{background:var(--bg4);color:var(--text2);border:1px solid var(--border)}
+.cc-btn-secondary:hover{color:var(--text);border-color:var(--text3)}
+.cc-btn-danger{background:rgba(255,59,48,.12);color:var(--red);border:1px solid rgba(255,59,48,.2)}
+.cc-btn-danger:hover{background:rgba(255,59,48,.2)}
+
+/* add pair form */
+.add-pair-form{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:1.5rem;padding:1.2rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px;align-items:flex-end}
+.apf-group{display:flex;flex-direction:column;gap:.3rem;flex:1;min-width:150px}
+.apf-label{font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}
+.apf-input{background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:.55rem .8rem;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none}
+.apf-input:focus{border-color:var(--lime-glow);box-shadow:0 0 0 3px rgba(200,241,53,.08)}
+[data-theme="light"] .apf-input:focus{box-shadow:0 0 0 3px rgba(78,140,0,.1)}
+
+/* pairs list */
+.pairs-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.7rem;margin-bottom:1.5rem}
+.pair-chip{display:flex;align-items:center;justify-content:space-between;background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:.65rem .9rem}
+.pair-chip-num{font-family:'Bebas Neue',cursive;font-size:1.2rem;color:var(--lime);min-width:24px}
+.pair-chip-names{font-size:.84rem;flex:1;padding:0 .5rem}
+.pair-chip-names span{display:block;font-size:.72rem;color:var(--text2)}
+.pair-chip-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1rem;padding:0 .2rem;transition:color .2s}
+.pair-chip-del:hover{color:var(--red)}
+
+/* groups view */
+.groups-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.group-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.group-header{background:var(--lime);color:var(--bg);padding:.7rem 1rem;display:flex;align-items:center;justify-content:space-between}
+.group-header h3{font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:.06em}
+.group-header span{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em}
+.group-table{width:100%;border-collapse:collapse}
+.group-table th{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);padding:.55rem .7rem;border-bottom:1px solid var(--border);text-align:center}
+.group-table th:first-child{text-align:left}
+.group-table td{padding:.6rem .7rem;border-bottom:1px solid var(--border2);font-size:.84rem;text-align:center}
+.group-table td:first-child{text-align:left}
+.group-table tr:last-child td{border-bottom:none}
+.group-table tr:hover td{background:rgba(200,241,53,.04)}
+.score-inputs{display:flex;align-items:center;gap:.3rem}
+.score-input{width:36px;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:.3rem;border-radius:3px;font-family:'Bebas Neue',cursive;font-size:1rem;text-align:center;outline:none;-webkit-appearance:none}
+.score-input:focus{border-color:var(--lime-glow)}
+.score-vs{font-family:'Space Mono',monospace;font-size:.55rem;color:var(--text3)}
+.match-row{display:flex;align-items:center;justify-content:space-between;padding:.7rem .9rem;border-bottom:1px solid var(--border2);gap:.5rem}
+.match-row:last-child{border-bottom:none}
+.match-team{font-size:.84rem;flex:1}
+.match-team.right{text-align:right}
+.qualifier-badge{display:inline-block;background:rgba(200,241,53,.15);color:var(--lime);border:1px solid var(--lime-glow);border-radius:2px;font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.1em;padding:.1rem .4rem;text-transform:uppercase;margin-left:.4rem}
+
+/* standings table */
+.standings-table{width:100%;border-collapse:collapse;margin-top:.5rem}
+.standings-table th{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);padding:.55rem .7rem;border-bottom:1px solid var(--border);text-align:center}
+.standings-table th:nth-child(2){text-align:left}
+.standings-table td{padding:.6rem .7rem;border-bottom:1px solid var(--border2);font-size:.82rem;text-align:center}
+.standings-table td:nth-child(2){text-align:left;font-weight:600}
+.standings-table tr:last-child td{border-bottom:none}
+.standings-table tr.qualifier td{background:rgba(200,241,53,.05)}
+.standings-table tr.qualifier td:nth-child(2)::after{content:' ✓';color:var(--lime);font-size:.75rem}
+.standings-table .rank-num{font-family:'Bebas Neue',cursive;font-size:1.2rem;color:var(--text3)}
+.standings-table .rank-num.q{color:var(--lime)}
+
+/* knockout bracket */
+.bracket-wrapper{overflow-x:auto;padding-bottom:1rem}
+.bracket{display:flex;gap:0;align-items:stretch;min-width:max-content}
+.bracket-round{display:flex;flex-direction:column;justify-content:space-around;min-width:180px;position:relative}
+.bracket-round-header{font-family:'Bebas Neue',cursive;font-size:1.1rem;letter-spacing:.06em;color:var(--lime);padding:.5rem 1rem 1rem;text-align:center}
+.bracket-matches{display:flex;flex-direction:column;flex:1;justify-content:space-around;padding:.5rem 0;gap:0}
+.bracket-match{position:relative;margin:.5rem 0}
+.bracket-match::after{content:'';position:absolute;right:-1px;top:50%;width:20px;height:0;border-top:1px solid var(--border);z-index:1}
+.bracket-round:last-child .bracket-match::after{display:none}
+.bm-team{background:var(--bg3);border:1px solid var(--border);padding:.55rem .8rem;font-size:.84rem;display:flex;align-items:center;justify-content:space-between;gap:.4rem;transition:border-color .2s}
+.bm-team:first-child{border-radius:4px 4px 0 0;border-bottom:1px solid var(--border2)}
+.bm-team:last-child{border-radius:0 0 4px 4px}
+.bm-team.winner{background:rgba(200,241,53,.1);border-color:var(--lime-glow)}
+[data-theme="light"] .bm-team.winner{background:rgba(78,140,0,.08)}
+.bm-team .bm-name{font-weight:500;flex:1}
+.bm-team .bm-score{font-family:'Bebas Neue',cursive;font-size:1.2rem;color:var(--lime);min-width:22px;text-align:right}
+.bm-team .bm-seed{font-family:'Space Mono',monospace;font-size:.5rem;color:var(--text3);min-width:20px}
+.bracket-connector{display:flex;flex-direction:column;justify-content:space-around;width:20px;padding:.5rem 0;flex-shrink:0}
+.bc-line{flex:1;border-right:1px solid var(--border);position:relative}
+.bc-line:first-child{border-top:1px solid var(--border);border-bottom:none;border-bottom-right-radius:0;border-top-right-radius:4px}
+.bc-line:last-child{border-bottom:1px solid var(--border);border-top:none;border-bottom-right-radius:4px}
+
+/* empty state */
+.empty-state{text-align:center;padding:4rem 2rem;color:var(--text3)}
+.empty-state .es-icon{font-size:3rem;margin-bottom:1rem;opacity:.4}
+.empty-state .es-text{font-family:'Bebas Neue',cursive;font-size:1.6rem;letter-spacing:.04em;color:var(--text2);margin-bottom:.5rem}
+.empty-state .es-sub{font-size:.85rem}
+
+/* phase nav */
+.phase-nav{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.phase-btn{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1rem;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s}
+.phase-btn.active{background:var(--bg4);color:var(--text);border-color:var(--text3)}
+
+/* ================================================
+   RANKINGS
+   ================================================ */
+#rankings{background:var(--bg)}
+.rank-tabs{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:.9rem}
+.r-tab{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.09em;text-transform:uppercase;padding:.48rem 1.1rem;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .2s}
+.r-tab.active,.r-tab:hover{background:var(--lime);color:var(--bg);border-color:var(--lime)}
+.rank-table{width:100%;border-collapse:collapse}
+.rank-table th{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);padding:.75rem 1rem;text-align:left;border-bottom:1px solid var(--border)}
+.rank-table td{padding:.85rem 1rem;border-bottom:1px solid var(--border2)}
+.rank-table tr:hover td{background:rgba(200,241,53,.03)}
+[data-theme="light"] .rank-table tr:hover td{background:rgba(78,140,0,.03)}
+.r-pos{font-family:'Bebas Neue',cursive;font-size:1.35rem;color:var(--text3);min-width:38px}
+.r-pos.g{color:var(--gold)} .r-pos.s{color:#aaa} .r-pos.b{color:#cd7f32}
+.r-player{display:flex;align-items:center;gap:.9rem}
+.r-avatar{width:38px;height:38px;border-radius:50%;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',cursive;font-size:.95rem;color:var(--lime);flex-shrink:0}
+.r-name{font-weight:600;font-size:.88rem}
+.r-partner{font-size:.75rem;color:var(--text2)}
+.r-pts{font-family:'Bebas Neue',cursive;font-size:1.5rem;color:var(--lime);text-align:right}
+.r-trend{font-size:.8rem;color:var(--text3);text-align:center}
+.tu{color:#4cd964} .td2{color:var(--red)}
+
+/* ================================================
+   NIVELES
+   ================================================ */
+#niveles{background:var(--bg2)}
+.levels-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:1rem}
+.level-card{background:var(--card-bg);border:1px solid var(--border);border-radius:6px;padding:1.7rem 1.4rem;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;cursor:default}
+.level-card:hover{transform:translateY(-4px);border-color:var(--card-hover);box-shadow:var(--shadow)}
+.lc-bg{font-family:'Bebas Neue',cursive;font-size:5.5rem;line-height:1;color:var(--border2);position:absolute;top:-.5rem;right:-.5rem;pointer-events:none}
+[data-theme="light"] .lc-bg{color:rgba(0,0,0,.04)}
+.lc-badge{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;font-family:'Bebas Neue',cursive;font-size:1rem;margin-bottom:.9rem;position:relative}
+.l1 .lc-badge{background:rgba(200,241,53,.1);color:var(--lime);border:1px solid var(--lime-glow)}
+.l2 .lc-badge{background:rgba(80,180,255,.1);color:#2b9fd4;border:1px solid rgba(80,180,255,.3)}
+.l3 .lc-badge{background:rgba(255,165,0,.1);color:#c97e0a;border:1px solid rgba(255,165,0,.3)}
+.l4 .lc-badge{background:rgba(255,90,90,.1);color:#c04040;border:1px solid rgba(255,90,90,.3)}
+.l5 .lc-badge{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+.lc-name{font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:.04em;margin-bottom:.55rem;position:relative}
+.lc-desc{font-size:.8rem;color:var(--text2);line-height:1.6;position:relative}
+.lc-tags{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.9rem;position:relative}
+.lc-tag{font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.07em;padding:.18rem .45rem;border:1px solid var(--border);border-radius:2px;color:var(--text3);text-transform:uppercase}
+.ascenso-box{margin-top:2.5rem;background:rgba(200,241,53,.05);border:1px solid var(--lime-glow);border-radius:6px;padding:1.8rem;display:flex;align-items:flex-start;gap:1.4rem}
+[data-theme="light"] .ascenso-box{background:rgba(78,140,0,.06)}
+.ab-icon{font-size:1.8rem;flex-shrink:0;margin-top:.15rem}
+.ab-title{font-family:'Bebas Neue',cursive;font-size:1.35rem;color:var(--lime);margin-bottom:.45rem}
+.ab-text{font-size:.85rem;color:var(--text2);line-height:1.7}
+.ab-text strong{color:var(--text)}
+
+/* ================================================
+   GALLERY
+   ================================================ */
+#galeria{background:var(--bg3)}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}
+.g-item{background:var(--bg4);border-radius:4px;overflow:hidden;position:relative;cursor:pointer}
+.g-item:first-child{grid-column:1/3;grid-row:1/3}
+.g-img{width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;aspect-ratio:4/3}
+.g-item:first-child .g-img{aspect-ratio:unset;min-height:280px}
+.g-photo{position:absolute;inset:0;transition:transform .5s var(--T)}
+.g-item:hover .g-photo{transform:scale(1.06)}
+.g-photo img{width:100%;height:100%;object-fit:cover}
+.g-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72) 0%,transparent 50%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:1rem}
+.g-item:hover .g-overlay{opacity:1}
+.g-caption{font-family:'Bebas Neue',cursive;font-size:1rem;letter-spacing:.04em;color:#fff}
+@media(max-width:580px){.gallery-grid{grid-template-columns:1fr 1fr}.g-item:first-child{grid-column:1/3}}
+
+/* ================================================
+   CONTACT
+   ================================================ */
+#contacto{background:var(--bg2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr;gap:2.5rem}}
+.ct-tagline{font-family:'Bebas Neue',cursive;font-size:clamp(2rem,5vw,3.4rem);line-height:1;margin-bottom:1.4rem}
+.ct-tagline .accent{color:var(--lime)}
+.ct-text{color:var(--text2);line-height:1.7;margin-bottom:1.8rem}
+.ct-links{display:flex;flex-direction:column;gap:.9rem}
+.ct-link{display:flex;align-items:center;gap:.9rem;padding:.9rem 1.1rem;background:var(--bg3);border:1px solid var(--border);border-radius:4px;text-decoration:none;color:var(--text);transition:border-color .2s,background .2s}
+.ct-link:hover{border-color:var(--lime-glow);background:rgba(200,241,53,.04)}
+.ct-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.ct-link-text .ct-lt{font-size:.88rem;font-weight:600}
+.ct-link-text .ct-ls{font-size:.76rem;color:var(--text2)}
+.fg{display:flex;flex-direction:column;gap:1.1rem}
+.fi{display:flex;flex-direction:column;gap:.35rem}
+.fi label{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text2)}
+.fi input,.fi textarea,.fi select{background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:.85rem .9rem;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;width:100%;-webkit-appearance:none;transition:border-color .2s,box-shadow .2s}
+.fi input:focus,.fi textarea:focus,.fi select:focus{border-color:var(--lime-glow);box-shadow:0 0 0 3px rgba(200,241,53,.08)}
+.fi textarea{min-height:110px;resize:vertical}
+.fi select option{background:var(--input-bg)}
+.f-submit{width:100%;background:var(--lime);color:var(--bg);border:none;padding:.95rem;font-family:'Bebas Neue',cursive;font-size:1.1rem;letter-spacing:.1em;border-radius:4px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.f-submit:hover{transform:translateY(-2px);box-shadow:0 8px 28px var(--lime-glow)}
+
+/* ================================================
+   NEWSLETTER POPUP
+   ================================================ */
+.nl-popup{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(140px);width:min(410px,calc(100vw - 2rem));background:var(--bg2);border:1px solid var(--lime-glow);border-radius:6px;padding:1.5rem;z-index:500;transition:transform .5s var(--T);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.nl-popup.show{transform:translateX(-50%) translateY(0)}
+.nl-close{position:absolute;top:.75rem;right:.75rem;background:none;border:none;color:var(--text2);font-size:1.1rem;cursor:pointer;line-height:1}
+.nl-lbl{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);margin-bottom:.45rem}
+.nl-title{font-family:'Bebas Neue',cursive;font-size:1.5rem;line-height:1;margin-bottom:.45rem}
+.nl-sub{font-size:.78rem;color:var(--text2);margin-bottom:1.1rem}
+.nl-form{display:flex;gap:.5rem}
+.nl-form input{flex:1;background:var(--input-bg);border:1px solid var(--border);color:var(--text);padding:.65rem .9rem;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.84rem;outline:none}
+.nl-form button{background:var(--lime);color:var(--bg);border:none;padding:.65rem 1.1rem;border-radius:4px;font-family:'Bebas Neue',cursive;font-size:.95rem;letter-spacing:.05em;cursor:pointer;white-space:nowrap}
+
+/* ================================================
+   FOOTER
+   ================================================ */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:3rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem}
+.f-logo{font-family:'Bebas Neue',cursive;font-size:1.9rem;letter-spacing:.05em;margin-bottom:.9rem}
+.f-logo span{color:var(--lime)}
+.f-tagline{font-size:.8rem;color:var(--text2);line-height:1.6;max-width:230px}
+.f-col-title{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);margin-bottom:1.1rem}
+.f-links{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+.f-links a{font-size:.83rem;color:var(--text2);text-decoration:none;transition:color .2s}
+.f-links a:hover{color:var(--lime)}
+.footer-bottom{max-width:1200px;margin:1.8rem auto 0;padding-top:1.4rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.9rem}
+.f-copy{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.09em;color:var(--text3)}
+.f-sponsor-link{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.09em;text-transform:uppercase;color:var(--lime);text-decoration:none}
+@media(max-width:768px){.footer-inner{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.footer-inner{grid-template-columns:1fr}}
+
+/* ================================================
+   SCROLLBAR + MISC
+   ================================================ */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:var(--lime-glow)}
+@media(max-width:768px){section{padding:4rem 1.2rem}.hero-content{padding:6rem 1.2rem 3rem}.hero-stats{gap:2rem}.levels-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.levels-grid{grid-template-columns:1fr}}
+.badge-completo{background:var(--lime);color:var(--bg);font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;padding:.2rem .6rem;border-radius:2px;text-transform:uppercase;display:inline-block;margin-left:.6rem}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">SA CABANA<span class="dot">·</span>PADEL</a>
+  <div class="nav-right">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#torneo">El Torneo</a></li>
+      <li><a href="#cuadro">Cuadro</a></li>
+      <li><a href="#rankings">Rankings</a></li>
+      <li><a href="#niveles">Niveles</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li>
+        <div class="lang-switch">
+          <button class="lang-btn active">ES</button>
+          <button class="lang-btn">EN</button>
+          <button class="lang-btn">DE</button>
+        </div>
+      </li>
+      <li>
+        <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
+          <div class="tt-ball" id="ttBall">🌙</div>
+          <div class="tt-icons"><span>🌙</span><span>☀️</span></div>
+        </button>
+      </li>
+      <li><a href="https://torneos.sportelia.es/#/tournaments-details/-OmzK5oVPCs0icWepzOd/:embed" target="_blank" class="nav-cta">Inscribirse</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-photo"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-live-pill">● Inscripciones abiertas</div>
+      <div class="hero-sponsor-badge">Patrocinado por <span class="gp-name">GESTPROPIEDAD</span> Real Estate &amp; Yachts</div>
+    </div>
+    <h1 class="hero-title">
+      TORNEO<br>
+      <span class="line2">DE PÁDEL</span><br>
+      <span class="line3">SA CABANA</span>
+    </h1>
+    <div class="hero-dates-banner">
+      <div>
+        <div class="dtext">16 – 19 ABRIL 2026</div>
+        <div class="dsub">Polideportivo Sa Cabana · Marratxí, Mallorca</div>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="https://torneos.sportelia.es/#/tournaments-details/-OmzK5oVPCs0icWepzOd/:embed" target="_blank" class="btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        INSCRIBIRSE EN SPORTELIA
+      </a>
+      <a href="#cuadro" class="btn-secondary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        VER CUADRO
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num" data-count="9">0</div><div class="lbl">Categorías</div></div>
+      <div class="hero-stat"><div class="num" data-count="4">0</div><div class="lbl">Días de torneo</div></div>
+      <div class="hero-stat"><div class="num" data-count="6">0</div><div class="lbl">Patrocinadores</div></div>
+      <div class="hero-stat"><div class="num" data-count="14">0</div><div class="lbl">Días para inscribirse</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-item">🎾 Inscripciones hasta el 14 de Abril en Sportelia <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item">🏆 Sorteos de palas y material deportivo <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item">👕 Welcome Pack: camiseta, regalos, agua, cerveza <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item">📸 Fotos profesionales por Elisabeth Sink <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item">🦈 Premio: Entrada a Palma Aquarium <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item">🎾 Inscripciones hasta el 14 de Abril en Sportelia <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item">🏆 Sorteos de palas y material deportivo <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item">👕 Welcome Pack: camiseta, regalos, agua, cerveza <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item">📸 Fotos profesionales por Elisabeth Sink <span class="ticker-sep">◆</span></div>
+    <div class="ticker-item">🦈 Premio: Entrada a Palma Aquarium <span class="ticker-sep">◆</span></div>
+  </div>
+</div>
+
+<!-- SPONSORS -->
+<div class="sponsors-bar">
+  <div class="sponsors-lbl">Patrocinadores &amp; Colaboradores</div>
+  <div class="marquee-track">
+    <div class="sponsor-logo main-sponsor">GESTPROPIEDAD<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">PREILLES S.L.<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">PALMA AQUARIUM<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">ELISABETH SINK STUDIO<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">EL MARISCAL DEL JAMÓN<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">SA CABANA SPORT<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo main-sponsor">GESTPROPIEDAD<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">PREILLES S.L.<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">PALMA AQUARIUM<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">ELISABETH SINK STUDIO<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">EL MARISCAL DEL JAMÓN<span class="sponsor-sep">●</span></div>
+    <div class="sponsor-logo">SA CABANA SPORT<span class="sponsor-sep">●</span></div>
+  </div>
+</div>
+
+<!-- COUNTDOWN -->
+<div class="countdown-section">
+  <div class="cd-inner">
+    <div>
+      <div class="ev-label">▶ Próximo torneo</div>
+      <div class="ev-title">Torneo Pádel Sa Cabana</div>
+      <div class="ev-meta">
+        <div class="ev-meta-item"><span class="ico">📅</span> 16–19 Abril 2026</div>
+        <div class="ev-meta-item"><span class="ico">📍</span> Polideportivo Sa Cabana, Marratxí</div>
+        <div class="ev-meta-item"><span class="ico">🎫</span> Inscripciones hasta 14 Abr · Sportelia</div>
+      </div>
+      <div class="ev-cats" style="margin-top:.9rem">
+        <div class="cat-tag">Fem 2ª–5ª</div>
+        <div class="cat-tag">Masc 2ª–5ª</div>
+        <div class="cat-tag">Mixtos B y C</div>
+      </div>
+    </div>
+    <div class="cd-timer">
+      <div class="cd-block"><span class="cd-num" id="cd-days">00</span><span class="cd-lbl">Días</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><span class="cd-num" id="cd-hours">00</span><span class="cd-lbl">Horas</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><span class="cd-num" id="cd-mins">00</span><span class="cd-lbl">Min</span></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><span class="cd-num" id="cd-secs">00</span><span class="cd-lbl">Seg</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- EL TORNEO -->
+<section id="torneo">
+  <div class="sec">
+    <div class="sec-hd reveal">
+      <div>
+        <div class="sec-lbl">// Polideportivo Sa Cabana · Marratxí</div>
+        <h2 class="sec-title">EL TORNEO</h2>
+      </div>
+    </div>
+    <div class="torneo-main-grid">
+      <div class="torneo-main-photo reveal">
+        <img src="https://images.unsplash.com/photo-1627626775846-122b778965ae?w=800&h=840&fit=crop&auto=format&q=80"
+             alt="Pádel Sa Cabana"
+             onerror="this.src='https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&h=840&fit=crop&auto=format&q=80'">
+        <div class="torneo-main-photo-overlay"></div>
+        <div class="photo-caption">
+          <div class="pc-venue">Polideportivo Sa Cabana</div>
+          <div class="pc-date">📍 Marratxí, Mallorca · 16–19 Abril 2026</div>
+        </div>
+      </div>
+      <div class="torneo-main-info reveal rd1">
+
+        <!-- Precio -->
+        <div class="info-block">
+          <div class="ib-label">Precio de inscripción</div>
+          <div class="price-grid">
+            <div class="price-card">
+              <div class="price-amount">25€</div>
+              <div class="price-desc">1 Categoría</div>
+            </div>
+            <div class="price-card">
+              <div class="price-amount">45€</div>
+              <div class="price-desc">2 Categorías</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categorías -->
+        <div class="info-block">
+          <div class="ib-label">Categorías</div>
+          <div class="cats-grid">
+            <div class="cat-row">
+              <div class="cat-row-name">🎾 Femenino</div>
+              <div class="cat-row-tags">
+                <span class="mini-tag">2ª</span><span class="mini-tag">3ª</span><span class="mini-tag">4ª</span><span class="mini-tag">5ª</span>
+              </div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-row-name">🎾 Masculino</div>
+              <div class="cat-row-tags">
+                <span class="mini-tag">2ª</span><span class="mini-tag">3ª</span><span class="mini-tag">4ª</span><span class="mini-tag">5ª</span>
+              </div>
+            </div>
+            <div class="cat-row">
+              <div class="cat-row-name">🎾 Mixtos</div>
+              <div class="cat-row-tags">
+                <span class="mini-tag">B</span><span class="mini-tag">C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Welcome Pack -->
+        <div class="info-block">
+          <div class="ib-label">Welcome Pack incluido</div>
+          <div class="pack-list">
+            <div class="pack-item"><span class="pi-icon">👕</span> Camiseta técnica del torneo</div>
+            <div class="pack-item"><span class="pi-icon">🎁</span> Regalos y material deportivo</div>
+            <div class="pack-item"><span class="pi-icon">💧</span> Agua mineral</div>
+            <div class="pack-item"><span class="pi-icon">🍺</span> Cerveza post-partido</div>
+          </div>
+        </div>
+
+        <!-- Premios -->
+        <div class="info-block">
+          <div class="ib-label">Premios</div>
+          <div class="premios-grid">
+            <div class="premio-card"><div class="premio-icon">🏓</div><div class="premio-text">Material deportivo &amp; palas en sorteo</div></div>
+            <div class="premio-card"><div class="premio-icon">📸</div><div class="premio-text">Fotos profesionales (Elisabeth Sink)</div></div>
+            <div class="premio-card"><div class="premio-icon">🦈</div><div class="premio-text">Entradas Palma Aquarium</div></div>
+          </div>
+        </div>
+
+        <!-- Inscripción -->
+        <a href="https://torneos.sportelia.es/#/tournaments-details/-OmzK5oVPCs0icWepzOd/:embed" target="_blank" class="inscripcion-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          INSCRIBIRSE EN SPORTELIA →
+        </a>
+        <div class="inscripcion-deadline">Plazo de inscripción: <span>14 de Abril de 2026</span></div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUADRO DEL TORNEO -->
+<section id="cuadro">
+  <div class="sec">
+    <div class="sec-hd reveal">
+      <div>
+        <div class="sec-lbl">// Gestión del Torneo</div>
+        <h2 class="sec-title">CUADRO DEL<br>TORNEO</h2>
+      </div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="cuadro-tabs" id="cuadroTabs"></div>
+
+    <!-- Controls -->
+    <div class="cuadro-controls">
+      <div style="display:flex;flex-direction:column;gap:.3rem">
+        <div class="cc-label">Vista</div>
+        <div class="phase-nav" id="phaseNav">
+          <button class="phase-btn active" onclick="setPhase('pairs')">Parejas</button>
+          <button class="phase-btn" onclick="setPhase('groups')">Fase de Grupos</button>
+          <button class="phase-btn" onclick="setPhase('bracket')">Cuadro Eliminatorio</button>
+        </div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:.6rem;flex-wrap:wrap">
+        <button class="cc-btn cc-btn-primary" onclick="generateGroups()">⚡ Generar Sorteo</button>
+        <button class="cc-btn cc-btn-secondary" onclick="generateBracket()">🏆 Generar Cuadro</button>
+        <button class="cc-btn cc-btn-danger" onclick="resetCategory()">↺ Resetear</button>
+      </div>
+    </div>
+
+    <!-- Pairs Phase -->
+    <div id="phase-pairs">
+      <div class="add-pair-form">
+        <div class="apf-group">
+          <div class="apf-label">Jugador 1</div>
+          <input class="apf-input" id="p1" placeholder="Nombre Apellido" type="text">
+        </div>
+        <div class="apf-group">
+          <div class="apf-label">Jugador 2</div>
+          <input class="apf-input" id="p2" placeholder="Nombre Apellido" type="text">
+        </div>
+        <button class="cc-btn cc-btn-primary" onclick="addPair()" style="margin-top:1.3rem">+ Añadir Pareja</button>
+      </div>
+      <div class="pairs-list" id="pairsList"></div>
+      <div class="empty-state" id="pairsEmpty">
+        <div class="es-icon">🎾</div>
+        <div class="es-text">Sin parejas aún</div>
+        <div class="es-sub">Añade las parejas inscritas usando el formulario</div>
+      </div>
+    </div>
+
+    <!-- Groups Phase -->
+    <div id="phase-groups" style="display:none">
+      <div class="empty-state" id="groupsEmpty">
+        <div class="es-icon">⚡</div>
+        <div class="es-text">Haz el sorteo primero</div>
+        <div class="es-sub">Añade al menos 3 parejas y pulsa "Generar Sorteo"</div>
+      </div>
+      <div class="groups-grid" id="groupsGrid" style="display:none"></div>
+    </div>
+
+    <!-- Bracket Phase -->
+    <div id="phase-bracket" style="display:none">
+      <div class="empty-state" id="bracketEmpty">
+        <div class="es-icon">🏆</div>
+        <div class="es-text">Genera el cuadro eliminatorio</div>
+        <div class="es-sub">Completa la fase de grupos y pulsa "Generar Cuadro"</div>
+      </div>
+      <div class="bracket-wrapper" id="bracketWrapper" style="display:none">
+        <div class="bracket" id="bracket"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RANKINGS -->
+<section id="rankings">
+  <div class="sec">
+    <div class="sec-hd reveal">
+      <div>
+        <div class="sec-lbl">// Clasificación General</div>
+        <h2 class="sec-title">RANKINGS</h2>
+      </div>
+      <a href="#" class="see-all">Ver ranking completo →</a>
+    </div>
+    <div class="rank-tabs" id="rankTabs">
+      <button class="r-tab active" onclick="switchRank(this,'m2')">Masc 2ª</button>
+      <button class="r-tab" onclick="switchRank(this,'m3')">Masc 3ª</button>
+      <button class="r-tab" onclick="switchRank(this,'f3')">Fem 3ª</button>
+      <button class="r-tab" onclick="switchRank(this,'mixB')">Mixto B</button>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="rank-table"><thead><tr><th>#</th><th>Pareja</th><th>Torneos</th><th style="text-align:center">Tend.</th><th style="text-align:right">Pts</th></tr></thead>
+      <tbody id="rankBody"></tbody></table>
+    </div>
+  </div>
+</section>
+
+<!-- NIVELES -->
+<section id="niveles">
+  <div class="sec">
+    <div class="sec-hd reveal">
+      <div>
+        <div class="sec-lbl">// Guía de Categorías</div>
+        <h2 class="sec-title">TU NIVEL,<br>TU CATEGORÍA</h2>
+      </div>
+    </div>
+    <div class="levels-grid reveal">
+      <div class="level-card l1"><div class="lc-bg">2</div><div class="lc-badge">2ª</div><div class="lc-name">AVANZADO</div><div class="lc-desc">Bandeja consistente, saque con slice. Juegas en red con soltura y lees bien el partido.</div><div class="lc-tags"><span class="lc-tag">Bandeja</span><span class="lc-tag">Red fluida</span></div></div>
+      <div class="level-card l2"><div class="lc-bg">3</div><div class="lc-badge">3ª</div><div class="lc-name">MEDIO</div><div class="lc-desc">Dominas la bandeja, sacas por 3, juegas torneos habitualmente con regularidad.</div><div class="lc-tags"><span class="lc-tag">Saque ×3</span><span class="lc-tag">Torneos frecuentes</span></div></div>
+      <div class="level-card l3"><div class="lc-bg">4</div><div class="lc-badge">4ª</div><div class="lc-name">MEDIO-BAJO</div><div class="lc-desc">Llevas 1-2 años jugando, peloteas con control, primeros torneos. Conoces la táctica básica.</div><div class="lc-tags"><span class="lc-tag">1-2 años</span><span class="lc-tag">Primeros torneos</span></div></div>
+      <div class="level-card l4"><div class="lc-bg">5</div><div class="lc-badge">5ª</div><div class="lc-name">INICIACIÓN</div><div class="lc-desc">Menos de 6 meses jugando. Peloteo suave, aprendiendo posiciones. ¡Bienvenido!</div><div class="lc-tags"><span class="lc-tag">&lt;6 meses</span><span class="lc-tag">Principiante</span></div></div>
+      <div class="level-card l5"><div class="lc-bg">B</div><div class="lc-badge">B</div><div class="lc-name">MIXTO B</div><div class="lc-desc">Categoría mixta nivel medio. Pareja mixta con dominio del juego básico consolidado.</div><div class="lc-tags"><span class="lc-tag">Mixto</span><span class="lc-tag">Nivel medio</span></div></div>
+    </div>
+    <div class="ascenso-box reveal">
+      <div class="ab-icon">⚡</div>
+      <div>
+        <div class="ab-title">Política de Categorización</div>
+        <div class="ab-text">En caso de duda sobre tu categoría, contacta con los organizadores <strong>antes de inscribirte</strong>. Inscribirse en una categoría inferior no permitida puede conllevar descalificación sin devolución de inscripción. <strong>¡Juega limpio y disfruta del torneo!</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria">
+  <div class="sec">
+    <div class="sec-hd reveal">
+      <div>
+        <div class="sec-lbl">// Fotos del torneo · Elisabeth Sink Studio</div>
+        <h2 class="sec-title">GALERÍA</h2>
+      </div>
+      <a href="#" class="see-all" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">@sacabanapadel ↗</a>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="g-item" style="grid-column:1/3;grid-row:1/3;">
+        <div class="g-img" style="min-height:280px;">
+          <div class="g-photo"><img src="https://images.unsplash.com/photo-1627626775846-122b778965ae?w=900&h=520&fit=crop&auto=format&q=80" alt="Pádel"></div>
+        </div>
+        <div class="g-overlay"><span class="g-caption">🏟️ Polideportivo Sa Cabana · Marratxí</span></div>
+      </div>
+      <div class="g-item"><div class="g-img" style="aspect-ratio:1/1"><div class="g-photo"><img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=500&h=500&fit=crop&auto=format&q=75" alt="Pádel court"></div></div><div class="g-overlay"><span class="g-caption">Entrega de premios</span></div></div>
+      <div class="g-item"><div class="g-img" style="aspect-ratio:1/1"><div class="g-photo"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=500&fit=crop&auto=format&q=75" alt="Pádel acción"></div></div><div class="g-overlay"><span class="g-caption">Acción en pista</span></div></div>
+      <div class="g-item"><div class="g-img" style="aspect-ratio:16/9"><div class="g-photo"><img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&h=340&fit=crop&auto=format&q=75" alt="Comunidad"></div></div><div class="g-overlay"><span class="g-caption">Comunidad de pádel</span></div></div>
+      <div class="g-item"><div class="g-img" style="aspect-ratio:16/9"><div class="g-photo"><img src="https://images.unsplash.com/photo-1551958219-acbc630e2914?w=600&h=340&fit=crop&auto=format&q=75" alt="Welcome Pack"></div></div><div class="g-overlay"><span class="g-caption">Welcome Pack · Camiseta + regalos</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="sec">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="sec-lbl">// Organización</div>
+        <h2 class="ct-tagline">¿TIENES<br>ALGUNA<br><span class="accent">DUDA?</span></h2>
+        <p class="ct-text">Para inscripciones, preguntas sobre categorías o cualquier duda operativa. Respondemos en menos de 24h.</p>
+        <div class="ct-links">
+          <a href="https://wa.me/34666000000" class="ct-link">
+            <div class="ct-icon" style="background:rgba(37,211,102,.14)">💬</div>
+            <div class="ct-link-text"><div class="ct-lt">WhatsApp Directo</div><div class="ct-ls">Respuesta inmediata</div></div>
+          </a>
+          <a href="https://torneos.sportelia.es/#/tournaments-details/-OmzK5oVPCs0icWepzOd/:embed" target="_blank" class="ct-link">
+            <div class="ct-icon" style="background:rgba(200,241,53,.1)">🎾</div>
+            <div class="ct-link-text"><div class="ct-lt">Inscripciones en Sportelia</div><div class="ct-ls">Hasta el 14 de Abril</div></div>
+          </a>
+          <div class="ct-link" style="cursor:default">
+            <div class="ct-icon" style="background:var(--bg3)">📍</div>
+            <div class="ct-link-text"><div class="ct-lt">Polideportivo Sa Cabana</div><div class="ct-ls">Marratxí, Mallorca</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal rd1">
+        <div class="fg">
+          <div class="fi"><label>Nombre completo</label><input type="text" placeholder="Tu nombre"></div>
+          <div class="fi"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
+          <div class="fi">
+            <label>Asunto</label>
+            <select>
+              <option value="">Selecciona un asunto</option>
+              <option>Inscripción / registro</option>
+              <option>Duda sobre mi categoría</option>
+              <option>Información sobre patrocinios</option>
+              <option>Problemas técnicos (Sportelia)</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="fi"><label>Mensaje</label><textarea placeholder="Cuéntanos en qué podemos ayudarte..."></textarea></div>
+          <button class="f-submit" onclick="this.textContent='✓ Enviado';this.style.background='var(--bg4)';this.style.color='var(--lime)';this.disabled=true">ENVIAR MENSAJE →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="f-logo">SA CABANA<span>·</span>PADEL</div>
+      <p class="f-tagline">Torneo de pádel amateur en Mallorca.<br>Polideportivo Sa Cabana · Marratxí<br>16–19 Abril 2026</p>
+    </div>
+    <div>
+      <div class="f-col-title">Torneo</div>
+      <ul class="f-links"><li><a href="#torneo">Información</a></li><li><a href="#cuadro">Cuadro</a></li><li><a href="#rankings">Rankings</a></li><li><a href="#niveles">Categorías</a></li></ul>
+    </div>
+    <div>
+      <div class="f-col-title">Info</div>
+      <ul class="f-links"><li><a href="https://torneos.sportelia.es/#/tournaments-details/-OmzK5oVPCs0icWepzOd/:embed" target="_blank">Inscripciones (Sportelia)</a></li><li><a href="#">Bases del Torneo</a></li><li><a href="#">Política de Privacidad</a></li><li><a href="#galeria">Galería</a></li></ul>
+    </div>
+    <div>
+      <div class="f-col-title">Patrocinadores</div>
+      <ul class="f-links"><li><a href="#">Gestpropiedad</a></li><li><a href="#">Preilles S.L.</a></li><li><a href="#">Palma Aquarium</a></li><li><a href="#contacto">Patrocinar →</a></li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="f-copy">© 2026 Torneo Pádel Sa Cabana · Marratxí, Mallorca</span>
+    <a href="#contacto" class="f-sponsor-link">¿Quieres patrocinar? →</a>
+  </div>
+</footer>
+
+<!-- NEWSLETTER POPUP -->
+<div class="nl-popup" id="nlPopup">
+  <button class="nl-close" onclick="closeNL()">✕</button>
+  <div class="nl-lbl">🎾 No te pierdas nada</div>
+  <div class="nl-title">ENTÉRATE ANTES QUE NADIE</div>
+  <div class="nl-sub">Abre inscripciones y resultados directamente en tu email.</div>
+  <div class="nl-form">
+    <input type="email" placeholder="tu@email.com" id="nlEmail">
+    <button onclick="subNL()">APÚNTAME</button>
+  </div>
+</div>
+
+<script>
+/* ======================================================
+   STATE
+   ====================================================== */
+const CATEGORIES = [
+  {id:'f2',  label:'Femenino 2ª'},
+  {id:'f3',  label:'Femenino 3ª'},
+  {id:'f4',  label:'Femenino 4ª'},
+  {id:'f5',  label:'Femenino 5ª'},
+  {id:'m2',  label:'Masculino 2ª'},
+  {id:'m3',  label:'Masculino 3ª'},
+  {id:'m4',  label:'Masculino 4ª'},
+  {id:'m5',  label:'Masculino 5ª'},
+  {id:'mixB',label:'Mixto B'},
+  {id:'mixC',label:'Mixto C'},
+];
+
+// state per category: { pairs: [], groups: [], bracket: [] }
+let state = {};
+CATEGORIES.forEach(c => state[c.id] = {pairs:[], groups:[], bracket:[]});
+let activeCat = 'f3';
+let activePhase = 'pairs';
+
+/* ======================================================
+   CURSOR
+   ====================================================== */
+const cur = document.getElementById('cursor'), ring = document.getElementById('cursorRing');
+let cx=0,cy=0,rx=0,ry=0;
+document.addEventListener('mousemove', e=>{cx=e.clientX;cy=e.clientY;cur.style.left=cx+'px';cur.style.top=cy+'px'});
+(function anim(){rx+=(cx-rx)*.12;ry+=(cy-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
+document.querySelectorAll('a,button,.torneo-card,.level-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';ring.style.width='54px';ring.style.height='54px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='11px';cur.style.height='11px';ring.style.width='38px';ring.style.height='38px'});
+});
+
+/* ======================================================
+   THEME
+   ====================================================== */
+const html = document.documentElement;
+const ball = document.getElementById('ttBall');
+const saved = localStorage.getItem('mpc-theme') || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+html.dataset.theme = saved;
+ball.textContent = saved==='dark'?'🌙':'☀️';
+document.getElementById('themeToggle').addEventListener('click',()=>{
+  const next = html.dataset.theme==='dark'?'light':'dark';
+  html.dataset.theme=next; localStorage.setItem('mpc-theme',next); ball.textContent=next==='dark'?'🌙':'☀️';
+});
+
+/* ======================================================
+   NAV
+   ====================================================== */
+window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>55));
+document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+document.querySelectorAll('.lang-btn').forEach(b=>b.addEventListener('click',e=>{document.querySelectorAll('.lang-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active')}));
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});document.getElementById('navLinks').classList.remove('open')}}));
+
+/* ======================================================
+   COUNTDOWN
+   ====================================================== */
+const target=new Date('2026-04-16T09:00:00');
+function tick(){
+  const d=target-new Date();if(d<=0)return;
+  const set=(id,v)=>{const el=document.getElementById(id),s=String(v).padStart(2,'0');if(el.textContent!==s){el.textContent=s;el.classList.add('pop');setTimeout(()=>el.classList.remove('pop'),350)}};
+  set('cd-days',Math.floor(d/86400000));set('cd-hours',Math.floor(d%86400000/3600000));
+  set('cd-mins',Math.floor(d%3600000/60000));set('cd-secs',Math.floor(d%60000/1000));
+}
+setInterval(tick,1000);tick();
+
+/* ======================================================
+   COUNTERS
+   ====================================================== */
+const cobs=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(!e.isIntersecting)return;
+  const el=e.target,tgt=+el.dataset.count,step=tgt/55;let cur2=0;
+  const t=setInterval(()=>{cur2+=step;if(cur2>=tgt){el.textContent=tgt;clearInterval(t)}else el.textContent=Math.floor(cur2)},18);
+  cobs.unobserve(el);
+}),{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cobs.observe(el));
+
+/* ======================================================
+   REVEAL
+   ====================================================== */
+const robs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>robs.observe(el));
+
+/* ======================================================
+   CUADRO — CATEGORY TABS
+   ====================================================== */
+function buildCatTabs(){
+  const container=document.getElementById('cuadroTabs');
+  container.innerHTML='';
+  CATEGORIES.forEach(c=>{
+    const btn=document.createElement('button');
+    btn.className='c-tab'+(c.id===activeCat?' active':'');
+    btn.textContent=c.label;
+    const pairCount=state[c.id].pairs.length;
+    if(pairCount>0){
+      const badge=document.createElement('span');
+      badge.className='badge-completo';
+      badge.textContent=pairCount+' parejas';
+      btn.appendChild(badge);
+    }
+    btn.onclick=()=>{activeCat=c.id;buildCatTabs();renderCurrentPhase()};
+    container.appendChild(btn);
+  });
+}
+buildCatTabs();
+
+/* ======================================================
+   PHASE SWITCHER
+   ====================================================== */
+function setPhase(phase){
+  activePhase=phase;
+  document.querySelectorAll('.phase-btn').forEach(b=>b.classList.toggle('active',b.textContent.toLowerCase().includes(phase==='pairs'?'par':phase==='groups'?'grup':'cuadr')));
+  renderCurrentPhase();
+}
+function renderCurrentPhase(){
+  document.getElementById('phase-pairs').style.display = activePhase==='pairs'?'block':'none';
+  document.getElementById('phase-groups').style.display = activePhase==='groups'?'block':'none';
+  document.getElementById('phase-bracket').style.display = activePhase==='bracket'?'block':'none';
+  if(activePhase==='pairs') renderPairs();
+  if(activePhase==='groups') renderGroups();
+  if(activePhase==='bracket') renderBracket();
+}
+
+/* ======================================================
+   PAIRS
+   ====================================================== */
+function addPair(){
+  const p1=document.getElementById('p1').value.trim();
+  const p2=document.getElementById('p2').value.trim();
+  if(!p1||!p2){alert('Introduce los nombres de ambos jugadores');return}
+  state[activeCat].pairs.push({p1,p2,id:Date.now()});
+  document.getElementById('p1').value='';document.getElementById('p2').value='';
+  renderPairs();buildCatTabs();
+}
+document.getElementById('p1').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('p2').focus()});
+document.getElementById('p2').addEventListener('keydown',e=>{if(e.key==='Enter')addPair()});
+
+function renderPairs(){
+  const pairs=state[activeCat].pairs;
+  const list=document.getElementById('pairsList');
+  const empty=document.getElementById('pairsEmpty');
+  list.innerHTML='';
+  if(!pairs.length){list.style.display='none';empty.style.display='block';return}
+  list.style.display='grid';empty.style.display='none';
+  pairs.forEach((pair,i)=>{
+    const chip=document.createElement('div');chip.className='pair-chip';
+    chip.innerHTML=`<div class="pair-chip-num">${i+1}</div>
+      <div class="pair-chip-names">${pair.p1}<span>con ${pair.p2}</span></div>
+      <button class="pair-chip-del" onclick="removePair(${pair.id})" title="Eliminar pareja">✕</button>`;
+    list.appendChild(chip);
+  });
+}
+function removePair(id){
+  state[activeCat].pairs=state[activeCat].pairs.filter(p=>p.id!==id);
+  state[activeCat].groups=[];state[activeCat].bracket=[];
+  renderPairs();buildCatTabs();
+}
+
+/* ======================================================
+   GROUPS — DRAW
+   ====================================================== */
+function generateGroups(){
+  const pairs=[...state[activeCat].pairs];
+  if(pairs.length<3){alert('Necesitas al menos 3 parejas para generar grupos');setPhase('pairs');return}
+  // shuffle
+  for(let i=pairs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pairs[i],pairs[j]]=[pairs[j],pairs[i]]}
+  // distribute into groups of 3-4
+  const total=pairs.length;
+  const numGroups=Math.ceil(total/4);
+  const groups=[];
+  let idx=0;
+  for(let g=0;g<numGroups;g++){
+    const size=g<(total%numGroups||numGroups)?Math.ceil(total/numGroups):Math.floor(total/numGroups);
+    const groupPairs=pairs.slice(idx,idx+size);
+    idx+=size;
+    // init match results
+    const matches=[];
+    for(let a=0;a<groupPairs.length;a++)
+      for(let b=a+1;b<groupPairs.length;b++)
+        matches.push({a,b,scoreA:'',scoreB:'',winner:null});
+    groups.push({pairs:groupPairs,matches,standings:groupPairs.map((_,i)=>({idx:i,pts:0,gw:0,gl:0}))});
+  }
+  state[activeCat].groups=groups;
+  state[activeCat].bracket=[];
+  setPhase('groups');buildCatTabs();
+}
+
+/* ======================================================
+   RENDER GROUPS
+   ====================================================== */
+function renderGroups(){
+  const groups=state[activeCat].groups;
+  const grid=document.getElementById('groupsGrid');
+  const empty=document.getElementById('groupsEmpty');
+  if(!groups.length){grid.style.display='none';empty.style.display='block';return}
+  grid.style.display='grid';empty.style.display='none';
+  grid.innerHTML='';
+  groups.forEach((grp,gi)=>{
+    const card=document.createElement('div');card.className='group-card';
+    const letter=String.fromCharCode(65+gi);
+    // Standings
+    const st=calcStandings(grp);
+    const qualifiers=st.slice(0,Math.min(2,st.length));
+    const qualSet=new Set(qualifiers.map(x=>x.idx));
+
+    card.innerHTML=`
+      <div class="group-header"><h3>GRUPO ${letter}</h3><span>${grp.pairs.length} parejas</span></div>
+      <div style="padding:.8rem">
+        <div class="ib-label" style="margin-bottom:.6rem">Partidos</div>
+        ${grp.matches.map((m,mi)=>`
+          <div class="match-row">
+            <div class="match-team">${grp.pairs[m.a].p1}/${grp.pairs[m.a].p2.split(' ')[0]}</div>
+            <div class="score-inputs">
+              <input class="score-input" type="number" min="0" max="9" value="${m.scoreA}" placeholder="0"
+                oninput="setScore(${gi},${mi},'A',this.value)">
+              <span class="score-vs">vs</span>
+              <input class="score-input" type="number" min="0" max="9" value="${m.scoreB}" placeholder="0"
+                oninput="setScore(${gi},${mi},'B',this.value)">
+            </div>
+            <div class="match-team right">${grp.pairs[m.b].p1}/${grp.pairs[m.b].p2.split(' ')[0]}</div>
+          </div>`).join('')}
+        <div class="ib-label" style="margin:.9rem 0 .5rem">Clasificación</div>
+        <table class="standings-table">
+          <thead><tr><th>#</th><th>Pareja</th><th>PJ</th><th>PG</th><th>PP</th><th>Pts</th></tr></thead>
+          <tbody>
+            ${st.map((s,rank)=>`
+              <tr class="${qualSet.has(s.idx)?'qualifier':''}">
+                <td><span class="rank-num ${qualSet.has(s.idx)?'q':''}">${rank+1}</span></td>
+                <td>${grp.pairs[s.idx].p1}<br><small style="color:var(--text2);font-size:.7rem">${grp.pairs[s.idx].p2}</small></td>
+                <td>${s.gw+s.gl}</td><td>${s.gw}</td><td>${s.gl}</td>
+                <td style="font-family:'Bebas Neue',cursive;font-size:1.1rem;color:var(--lime)">${s.pts}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+        ${qualifiers.length>0?`<div style="font-family:'Space Mono',monospace;font-size:.58rem;color:var(--lime);margin-top:.6rem;letter-spacing:.08em">✓ CLASIFICADOS AL CUADRO: ${qualifiers.map(q=>grp.pairs[q.idx].p1).join(' · ')}</div>`:''}
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function setScore(gi,mi,side,val){
+  const m=state[activeCat].groups[gi].matches[mi];
+  if(side==='A') m.scoreA=val; else m.scoreB=val;
+  const sa=parseInt(m.scoreA),sb=parseInt(m.scoreB);
+  if(!isNaN(sa)&&!isNaN(sb)&&(sa!==sb)) m.winner=sa>sb?m.a:m.b;
+  else m.winner=null;
+  renderGroups();
+}
+
+function calcStandings(grp){
+  const st=grp.pairs.map((_,i)=>({idx:i,pts:0,gw:0,gl:0}));
+  grp.matches.forEach(m=>{
+    const sa=parseInt(m.scoreA),sb=parseInt(m.scoreB);
+    if(!isNaN(sa)&&!isNaN(sb)&&(sa!==sb)){
+      if(sa>sb){st[m.a].pts+=2;st[m.a].gw++;st[m.b].gl++;}
+      else{st[m.b].pts+=2;st[m.b].gw++;st[m.a].gl++;}
+    }
+  });
+  return st.sort((a,b)=>b.pts-a.pts||b.gw-a.gw);
+}
+
+/* ======================================================
+   BRACKET — KNOCKOUT
+   ====================================================== */
+function generateBracket(){
+  const groups=state[activeCat].groups;
+  if(!groups.length){alert('Primero genera y completa la fase de grupos');setPhase('groups');return}
+  // Gather qualifiers: top 2 per group
+  let qualified=[];
+  groups.forEach((grp,gi)=>{
+    const st=calcStandings(grp);
+    const letter=String.fromCharCode(65+gi);
+    st.slice(0,Math.min(2,st.length)).forEach((s,rank)=>{
+      qualified.push({name:`${grp.pairs[s.idx].p1}/${grp.pairs[s.idx].p2.split(' ')[0]}`,seed:`${letter}${rank+1}`});
+    });
+  });
+  if(qualified.length<2){alert('No hay suficientes clasificados para el cuadro');return}
+  // Pad to power of 2
+  const slots=nextPow2(qualified.length);
+  while(qualified.length<slots) qualified.push({name:'BYE',seed:'',bye:true});
+  // Cross seeding: A1 vs B2, B1 vs A2, etc.
+  const seeded=crossSeed(qualified);
+  // Build rounds
+  const rounds=buildRounds(seeded);
+  state[activeCat].bracket=rounds;
+  setPhase('bracket');
+}
+
+function nextPow2(n){let p=1;while(p<n)p*=2;return p}
+function crossSeed(pairs){
+  // standard cross seeding for bracket
+  const n=pairs.length;const result=new Array(n);
+  function place(arr,low,high,pos){
+    if(low===high){result[pos]=arr[low];return}
+    const mid=Math.floor((low+high)/2);
+    place(arr,low,mid,pos);place(arr,mid+1,high,pos+(high-mid));
+  }
+  place(pairs,0,n-1,0);
+  return result;
+}
+function buildRounds(seeds){
+  const rounds=[];
+  let current=[];
+  for(let i=0;i<seeds.length;i+=2) current.push({t1:seeds[i],t2:seeds[i+1],scoreA:'',scoreB:'',winner:null});
+  rounds.push({name:roundName(seeds.length/2),matches:current});
+  while(current.length>1){
+    const next=current.map((_,i)=>i%2===0?{t1:{name:'?',seed:''},t2:{name:'?',seed:''},scoreA:'',scoreB:'',winner:null}:null).filter(Boolean);
+    const nRound=[];
+    for(let i=0;i<current.length;i+=2) nRound.push({t1:{name:'?',seed:''},t2:{name:'?',seed:''},scoreA:'',scoreB:'',winner:null});
+    rounds.push({name:roundName(nRound.length),matches:nRound});
+    current=nRound;
+  }
+  return rounds;
+}
+function roundName(n){if(n===1)return'FINAL';if(n===2)return'SEMIS';if(n===4)return'CUARTOS';return'RONDA '+n}
+
+function renderBracket(){
+  const rounds=state[activeCat].bracket;
+  const wrapper=document.getElementById('bracketWrapper');
+  const empty=document.getElementById('bracketEmpty');
+  const bracketEl=document.getElementById('bracket');
+  if(!rounds||!rounds.length){wrapper.style.display='none';empty.style.display='block';return}
+  wrapper.style.display='block';empty.style.display='none';
+  bracketEl.innerHTML='';
+  rounds.forEach((round,ri)=>{
+    const roundDiv=document.createElement('div');roundDiv.className='bracket-round';
+    roundDiv.innerHTML=`<div class="bracket-round-header">${round.name}</div>`;
+    const matchesDiv=document.createElement('div');matchesDiv.className='bracket-matches';
+    round.matches.forEach((match,mi)=>{
+      const matchDiv=document.createElement('div');matchDiv.className='bracket-match';
+      const t1won=match.scoreA!==''&&match.scoreB!==''&&parseInt(match.scoreA)>parseInt(match.scoreB);
+      const t2won=match.scoreA!==''&&match.scoreB!==''&&parseInt(match.scoreB)>parseInt(match.scoreA);
+      matchDiv.innerHTML=`
+        <div class="bm-team ${t1won?'winner':''}">
+          <span class="bm-seed">${match.t1.seed||''}</span>
+          <span class="bm-name">${match.t1.name}</span>
+          <input class="score-input" type="number" min="0" max="9" value="${match.scoreA}" placeholder="—"
+            style="width:32px"
+            oninput="setBracketScore(${ri},${mi},'A',this.value)" ${match.t1.bye?'disabled':''}>
+        </div>
+        <div class="bm-team ${t2won?'winner':''}">
+          <span class="bm-seed">${match.t2.seed||''}</span>
+          <span class="bm-name">${match.t2.name||'BYE'}</span>
+          <input class="score-input" type="number" min="0" max="9" value="${match.scoreB}" placeholder="—"
+            style="width:32px"
+            oninput="setBracketScore(${ri},${mi},'B',this.value)" ${match.t2.bye?'disabled':''}>
+        </div>`;
+      matchesDiv.appendChild(matchDiv);
+    });
+    roundDiv.appendChild(matchesDiv);
+    bracketEl.appendChild(roundDiv);
+    // connector
+    if(ri<rounds.length-1){
+      const conn=document.createElement('div');conn.className='bracket-connector';
+      round.matches.forEach(()=>{
+        const line=document.createElement('div');line.className='bc-line';conn.appendChild(line);
+      });
+      bracketEl.appendChild(conn);
+    }
+  });
+}
+
+function setBracketScore(ri,mi,side,val){
+  const match=state[activeCat].bracket[ri].matches[mi];
+  if(side==='A') match.scoreA=val; else match.scoreB=val;
+  // propagate winner to next round
+  const sa=parseInt(match.scoreA),sb=parseInt(match.scoreB);
+  if(!isNaN(sa)&&!isNaN(sb)&&sa!==sb){
+    const winner=sa>sb?match.t1:match.t2;
+    const nextRound=state[activeCat].bracket[ri+1];
+    if(nextRound){
+      const nextMatchIdx=Math.floor(mi/2);
+      const nextMatch=nextRound.matches[nextMatchIdx];
+      if(nextMatch){
+        if(mi%2===0) nextMatch.t1={...winner};
+        else nextMatch.t2={...winner};
+      }
+    }
+  }
+  renderBracket();
+}
+
+/* ======================================================
+   RESET
+   ====================================================== */
+function resetCategory(){
+  if(!confirm(`¿Resetear todo en "${CATEGORIES.find(c=>c.id===activeCat).label}"? Se perderán todas las parejas, grupos y cuadro.`)) return;
+  state[activeCat]={pairs:[],groups:[],bracket:[]};
+  setPhase('pairs');buildCatTabs();
+}
+
+/* ======================================================
+   RANKINGS
+   ====================================================== */
+const rankData={
+  m2:[
+    {pos:1,p:['Carlos Vidal','Marco Rossi'],t:5,tr:'↑',pts:820},
+    {pos:2,p:['Pep Martínez','Alex Fdz'],t:5,tr:'→',pts:755},
+    {pos:3,p:['Toni Llull','Diego García'],t:4,tr:'↑',pts:690},
+    {pos:4,p:['Miquel Sastre','Jordi Camps'],t:4,tr:'↓',pts:620},
+    {pos:5,p:['Pau Riera','Nico Alonso'],t:3,tr:'↑',pts:540},
+  ],
+  m3:[
+    {pos:1,p:['Andreu Bosch','Sergi Font'],t:5,tr:'→',pts:800},
+    {pos:2,p:['Raul Morey','Víctor Serra'],t:5,tr:'↑',pts:760},
+    {pos:3,p:['Guillem Pol','Jaume Siquier'],t:4,tr:'↓',pts:690},
+    {pos:4,p:['Bernat Fuster','Albert Mas'],t:4,tr:'↑',pts:640},
+    {pos:5,p:['Tomeu Clar','Joan Ribas'],t:3,tr:'↓',pts:570},
+  ],
+  f3:[
+    {pos:1,p:['María Soler','Ana Coll'],t:5,tr:'↑',pts:770},
+    {pos:2,p:['Laura Torres','Isabel Mas'],t:5,tr:'→',pts:705},
+    {pos:3,p:['Carme Vidal','Neus Barceló'],t:4,tr:'↓',pts:650},
+    {pos:4,p:['Rosa Fiol','Marta Esteva'],t:4,tr:'↑',pts:585},
+    {pos:5,p:['Joana Pujol','Cristina Mut'],t:3,tr:'→',pts:500},
+  ],
+  mixB:[
+    {pos:1,p:['Miquel Llull','Sara Pons'],t:4,tr:'↑',pts:680},
+    {pos:2,p:['Alex Mut','Lidia Coll'],t:4,tr:'→',pts:630},
+    {pos:3,p:['Dani Valls','Marta Ferrer'],t:3,tr:'↑',pts:590},
+    {pos:4,p:['Pere Rosselló','Elena Montes'],t:3,tr:'↓',pts:530},
+    {pos:5,p:['Biel Català','Aina Serra'],t:2,tr:'→',pts:470},
+  ]
+};
+function switchRank(el,key){
+  document.querySelectorAll('.r-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');
+  document.getElementById('rankBody').innerHTML=rankData[key].map(r=>{
+    const pc=r.pos===1?'g':r.pos===2?'s':r.pos===3?'b':'';
+    const tc=r.tr==='↑'?'tu':r.tr==='↓'?'td2':'';
+    const ini=r.p[0].split(' ').map(w=>w[0]).join('');
+    return`<tr><td><div class="r-pos ${pc}">${r.pos}</div></td>
+      <td><div class="r-player"><div class="r-avatar">${ini}</div>
+        <div><div class="r-name">${r.p[0]}</div><div class="r-partner">con ${r.p[1]}</div></div></div></td>
+      <td style="color:var(--text2);font-size:.84rem">${r.t} jugados</td>
+      <td class="r-trend ${tc}" style="text-align:center;font-size:1.1rem">${r.tr}</td>
+      <td class="r-pts">${r.pts}</td></tr>`;
+  }).join('');
+}
+switchRank(document.querySelector('.r-tab'),'m2');
+
+/* ======================================================
+   NEWSLETTER
+   ====================================================== */
+setTimeout(()=>{if(!sessionStorage.getItem('nl'))document.getElementById('nlPopup').classList.add('show')},10000);
+function closeNL(){document.getElementById('nlPopup').classList.remove('show');sessionStorage.setItem('nl','1')}
+function subNL(){
+  const em=document.getElementById('nlEmail');
+  if(!em.value||!em.value.includes('@')){em.style.borderColor='var(--red)';return}
+  document.getElementById('nlPopup').innerHTML=`<div style="text-align:center;padding:1rem 0"><div style="font-size:2.5rem;margin-bottom:.8rem">🎾</div><div class="nl-lbl" style="text-align:center">¡Perfecto!</div><div class="nl-title" style="margin:.4rem 0">YA ESTÁS DENTRO</div><div class="nl-sub">Te avisaremos antes de cada torneo.</div></div>`;
+  setTimeout(closeNL,3000);
+}
+
+/* ======================================================
+   INIT
+   ====================================================== */
+renderCurrentPhase();
+</script>
+</body>
+</html>
